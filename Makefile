@@ -1,5 +1,5 @@
 all: 
-	make TARGET=th12 coap-post
+	#make TARGET=th12 coap-post
 	make TARGET=th12-lowpower coap-post-sleep
 
 ifndef TARGET

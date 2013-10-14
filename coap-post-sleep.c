@@ -23,6 +23,7 @@
 /* th-12 */
 #include "th-12.h"
 #include "dht.h"
+#include "dev/button-sensor.h"
 
 /* default POST location */
 /* hostname for the sink */
@@ -665,6 +666,7 @@ led_off(void *ptr)
 PROCESS_THREAD(th_12, ev, data)
 {
 
+SENSORS_ACTIVATE(button_sensor);
   PROCESS_BEGIN();
 
   ev_post_con_started = process_alloc_event();
@@ -732,6 +734,9 @@ PROCESS_THREAD(th_12, ev, data)
   while(1) {
 
     PROCESS_WAIT_EVENT();
+    if(ev == sensors_event && data == &button_sensor) {
+          	  		  PRINTF("button pressed data=%u\n",data);
+    }
 
     if(ev == PROCESS_EVENT_TIMER && etimer_expired(&et_do_dht)) {
       PRINTF("do_dht expired\n\r");
@@ -792,6 +797,6 @@ PROCESS_THREAD(th_12, ev, data)
       PRINTF("sensor failed schedule retry\n");
     }
   }
-
+  SENSORS_ACTIVATE(button_sensor);
   PROCESS_END();
 }
