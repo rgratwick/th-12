@@ -87,7 +87,7 @@ int main(void) {
 		CRM->XTAL_CNTLbits.XTAL_CTUNE = (ECONOTAG_CTUNE_4PF << 4) | ECONOTAG_CTUNE;
 		CRM->XTAL_CNTLbits.XTAL_FTUNE = ECONOTAG_FTUNE;
 	}
-
+	mc1322x_config.eui = 0;
 	/* create mac address if blank*/
 	if (mc1322x_config.eui == 0) {
 		/* mac address is blank */

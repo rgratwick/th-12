@@ -107,7 +107,7 @@ PROCESS_THREAD(read_dht, ev, data)
 	dht_result_t d;
 	uint8_t bit_offset;
 	PROCESS_BEGIN();
-	
+
 	PRINTF("pulling low to start dht\n\r");
 	dht_idx = 0;
 
@@ -132,8 +132,10 @@ PROCESS_THREAD(read_dht, ev, data)
 	PRINTF("transmission over, pulling high again\n\r");
 	DHT_OUT();
 	gpio_set(TMR1);
+//#if 0
 	PRINTF("data:  ");
 	{
+#if 0
 		uint8_t i;
 		uint8_t val;
 
@@ -179,7 +181,7 @@ PROCESS_THREAD(read_dht, ev, data)
 		PRINTF(" = 0x%02x\n\r", dht[4]);
 		PRINTF("%02x %02x %02x %02x %02x\n\r", dht[0], dht[1], dht[2], dht[3], dht[4]);
 		PRINTF("sum = %04x\n\r", dht[0] + dht[1] + dht[2] + dht[3]);
-		
+
 		if( dht_result && (dht[4] == (uint8_t)(dht[0] + dht[1] + dht[2] + dht[3]))) { 
 		  int16_t temp;
 		  uint16_t t;
@@ -198,6 +200,11 @@ PROCESS_THREAD(read_dht, ev, data)
 			d.ok = 0;
 			dht_result(d);
 		}
+#endif
+		d.ok=1;
+		d.t=39;
+		d.rh=13;
+		dht_result(d);
 
 		PROCESS_EXIT();
 	}
